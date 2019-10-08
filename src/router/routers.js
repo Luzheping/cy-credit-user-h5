@@ -8,9 +8,17 @@ export default [
     path: '/index',
     name: 'index',
     meta: {
-      title: '车险分期'
+      title: '车云信贷'
     },
     component: () => import('@/views/index.vue')
+  },
+  {
+    path: '/socialSecurity',
+    name: 'socialSecurity',
+    meta: {
+      title: '社保信息'
+    },
+    component: () => import('@/views/content/socialSecurity.vue')
   },
   {
     path: '/error404',

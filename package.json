@@ -12,15 +12,17 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@huoyu/vue-digitroll": "^1.0.4",
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "cy-upload-image": "^3.1.2",
     "element-ui": "^2.7.2",
+    "fastclick": "^1.0.6",
     "js-cookie": "^2.2.0",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "lib-flexible": "^0.3.2",
-    "mint-ui": "^2.2.13",
+    "mand-mobile": "^2.5.2",
     "moment": "^2.24.0",
     "postcss-px2rem": "^0.3.0",
     "reset-css": "^4.0.1",
