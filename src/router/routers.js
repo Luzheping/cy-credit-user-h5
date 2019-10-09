@@ -21,6 +21,30 @@ export default [
     component: () => import('@/views/content/socialSecurity.vue')
   },
   {
+    path: '/applySuccess',
+    name: 'applySuccess',
+    meta: {
+      title: '申请成功'
+    },
+    component: () => import('@/views/content/applySuccess.vue')
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    meta: {
+      title: '联系银行'
+    },
+    component: () => import('@/views/content/contact.vue')
+  },
+  {
+    path: '/credit',
+    name: 'credit',
+    meta: {
+      title: '信用贷款'
+    },
+    component: () => import('@/views/content/credit.vue')
+  },
+  {
     path: '/error404',
     name: 'error404',
     meta: {
