@@ -21,8 +21,8 @@
               <div class="ft3" slot="right">个月</div>
             </md-input-item>
             <md-input-item ref="name" preview-type="text" value="张**" title="姓名" placeholder="您的姓名" is-title-latent></md-input-item>
-            <md-input-item ref="name" preview-type="text" value="张**" title="手机号" placeholder="您的手机号" is-title-latent>
-              <div class="ft4" slot="right">获取验证码</div>
+            <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" placeholder="您的手机号" is-title-latent>
+              <div class="ft4" slot="right" @click="handleGetCode">{{btnContent}}</div>
             </md-input-item>
             <md-input-item ref="name" preview-type="text" value="张**" title="验证码" placeholder="6位数验证码" is-title-latent></md-input-item>
           </md-field>
@@ -37,30 +37,102 @@
 import icon1 from '../assets/images/index/icon1.png'
 import icon2 from '../assets/images/index/icon2.png'
 import icon3 from '../assets/images/index/icon3.png'
+import { queryStatistical, querySendSms } from '@/api/index'
+import { Toast } from 'mand-mobile'
 export default {
   name: 'Index',
   data() {
     return {
+      btnContent: '获取验证码',
+      time: 0,
+      disabled: false,
+      phone: '',
       iconList: [
         {
           src: icon1,
-          num: 123,
+          num: '',
           name: '申请用户(人)'
         },
         {
           src: icon2,
-          num: 123,
+          num: '',
           name: '入驻银行(家)'
         },
         {
           src: icon3,
-          num: 123,
+          num: '',
           name: '注册客服(人)'
         }
       ]
     }
   },
+  mounted() {
+    let params = {}
+    queryStatistical(params).then(res => {
+      console.log(res)
+      if (res.code === 200) {
+        let data = res.data
+        this.iconList[0].num = data.userApplyNum
+        this.iconList[1].num = data.organApplyNum
+        this.iconList[2].num = data.userRegisterNum
+      }
+    })
+  },
   methods: {
+    // 点击获取验证码
+    handleGetCode() {
+      var vm = this
+      var myreg = /^[1][3-9][0-9]{9}$/
+      console.log(vm.phone)
+      var params = {
+        cellPhone: vm.phone
+      }
+      if (!vm.phone) {
+        Toast({
+          content: '手机号码不能为空',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
+      if (!myreg.test(vm.phone)) {
+        Toast({
+          content: '手机号码格式错误',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
+      if (this.disabled) {
+        return
+      }
+      querySendSms(params)
+        .then(res => {
+          if (res.status === 200) {
+            var data = res.data
+            Toast({
+              content: data.message,
+              position: 'bottom',
+              duration: 3000
+            })
+          }
+        })
+      this.time = 60
+      this.timer()
+    },
+    // 定时器
+    timer() {
+      if (this.time > 0) {
+        this.time--
+        this.btnContent = this.time + 's后重新获取'
+        this.disabled = true
+        var timer = setTimeout(this.timer, 1000)
+      } else if (this.time === 0) {
+        this.btnContent = '获取验证码'
+        clearTimeout(timer)
+        this.disabled = false
+      }
+    },
     handleScroll() {
       var parentScrollTop = this.$refs.parent.scrollTop
       var childH = this.$refs.child.scrollHeight
@@ -82,7 +154,7 @@ export default {
   }
   .ft4 {
     font-size: 12px;
-    color: #3077FF;
+    color: #3077ff;
   }
   .head {
     width: 100%;
@@ -121,6 +193,10 @@ export default {
         }
       }
     }
+  }
+  .md-button {
+    width: 320px;
+    border-radius: 2px;
   }
 }
 </style>

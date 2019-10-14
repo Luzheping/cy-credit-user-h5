@@ -12,6 +12,7 @@ import filter from '@/libs/filter' // 过滤
 import '@/assets/css/common.less'
 import moment from 'moment'
 import FastClick from 'fastclick'
+import { getToken } from './libs/cy'
 
 if ('addEventListener' in document && 'ontouchstart' in window) {
   FastClick.prototype.focus = function (targetElement) {
@@ -32,8 +33,10 @@ Vue.config.productionTip = false
 Vue.prototype.$Bus = bus
 Vue.prototype.moment = moment
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+getToken(function () {
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')
+})
