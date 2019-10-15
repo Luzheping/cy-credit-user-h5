@@ -14,19 +14,19 @@
         </div>
         <div>
           <md-field>
-            <md-input-item ref="name" preview-type="text" value="张**" title="贷款金额" placeholder="您的期望贷款金额" is-title-latent>
+            <md-input-item ref="name" preview-type="text" v-model="loanAmount" title="贷款金额" placeholder="您的期望贷款金额" is-title-latent>
               <div class="ft3" slot="right">万元</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" value="张**" title="贷款期限" placeholder="您的期望贷款期限" is-title-latent>
+            <md-input-item ref="name" preview-type="text" v-model="expire" title="贷款期限" placeholder="您的期望贷款期限" is-title-latent>
               <div class="ft3" slot="right">个月</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" value="张**" title="姓名" placeholder="您的姓名" is-title-latent></md-input-item>
+            <md-input-item ref="name" preview-type="text" v-model="customerName" title="姓名" placeholder="您的姓名" is-title-latent></md-input-item>
             <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" placeholder="您的手机号" is-title-latent>
               <div class="ft4" slot="right" @click="handleGetCode">{{btnContent}}</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" value="张**" title="验证码" placeholder="6位数验证码" is-title-latent></md-input-item>
+            <md-input-item ref="name" preview-type="text" v-model="verifyCode" title="验证码" placeholder="6位数验证码" is-title-latent></md-input-item>
           </md-field>
-          <md-button type="primary">测算额度</md-button>
+          <md-button type="primary" @click="handleSubmit">测算额度</md-button>
         </div>
       </div>
     </div>
@@ -37,7 +37,7 @@
 import icon1 from '../assets/images/index/icon1.png'
 import icon2 from '../assets/images/index/icon2.png'
 import icon3 from '../assets/images/index/icon3.png'
-import { queryStatistical, querySendSms } from '@/api/index'
+import { queryStatistical, querySendSms, postSave } from '@/api/index'
 import { Toast } from 'mand-mobile'
 export default {
   name: 'Index',
@@ -47,6 +47,11 @@ export default {
       time: 0,
       disabled: false,
       phone: '',
+      openId: JSON.parse(sessionStorage.userInfo).openid,
+      customerName: '',
+      expire: '',
+      loanAmount: '',
+      verifyCode: '',
       iconList: [
         {
           src: icon1,
@@ -69,7 +74,6 @@ export default {
   mounted() {
     let params = {}
     queryStatistical(params).then(res => {
-      console.log(res)
       if (res.code === 200) {
         let data = res.data
         this.iconList[0].num = data.userApplyNum
@@ -83,7 +87,6 @@ export default {
     handleGetCode() {
       var vm = this
       var myreg = /^[1][3-9][0-9]{9}$/
-      console.log(vm.phone)
       var params = {
         cellPhone: vm.phone
       }
@@ -140,6 +143,30 @@ export default {
         var a = parentScrollTop / childH
         this.$refs.head.style.opacity = 1 - a
       }
+    },
+    handleSubmit() {
+      let vm = this
+      let params = {
+        customerName: vm.customerName,
+        expire: vm.expire,
+        loanAmount: vm.loanAmount,
+        mobile: vm.phone,
+        openId: vm.openId,
+        verifyCode: vm.verifyCode
+      }
+      postSave(params).then(res => {
+        if (res.code === 200) {
+          let data = res.data
+          console.log(data)
+          this.$router.push({
+            path: '/socialSecurity',
+            query: {
+              amount: data.amount,
+              orderId: data.orderId
+            }
+          })
+        }
+      })
     }
   }
 }

@@ -7,22 +7,48 @@
           <span class="cl5">1/5</span>
         </div>
         <div class="mrl-10">
-          <md-radio name="0" v-model="checked" label="有" />
-          <md-radio name="1" v-model="checked" label="无" />
+          <md-radio name="0" label="有" v-model="checked" />
+          <md-radio name="1" label="无" v-model="checked" />
         </div>
-        <div class="pre-btn">上一题</div>
       </div>
     </md-popup>
   </div>
 </template>
 
 <script>
+import { querySocial } from '@/api/socialSecurity'
 export default {
   name: 'StepOne',
+  props: {
+    isPopupOne: {
+      default: false
+    },
+    orderId: {
+      default: ''
+    }
+  },
   data() {
     return {
-      isPopupShow: false,
-      checked: '0'
+      isPopupShow: this.isPopupOne,
+      checked: ''
+    }
+  },
+  watch: {
+    checked() {
+      let vm = this
+      let params = {
+        id: vm.orderId,
+        socialSecurity: vm.checked
+      }
+      querySocial(params).then(res => {
+        if (res.code === 200) {
+          let data = res.data
+          vm.$emit('handleChange', '1', data)
+        }
+      })
+    },
+    isPopupOne(val) {
+      this.isPopupShow = val
     }
   },
   methods: {
@@ -55,12 +81,6 @@ export default {
       & > span:nth-child(2) {
         float: right;
       }
-    }
-    .pre-btn {
-      color: #3077ff;
-      font-size: 14px;
-      text-align: center;
-      margin-top: 100px;
     }
   }
 }

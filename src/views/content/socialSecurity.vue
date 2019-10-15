@@ -1,11 +1,11 @@
 <template>
   <div class='socialSecurity'>
-    <Dynamicnum />
-    <StepOne :isPopup="false"/>
-    <StepTwo :isPopup="true"/>
-    <StepThree :isPopup="true"/>
-    <StepFour :isPopup="true"/>
-    <StepFive :isPopup="true"/>
+    <Dynamicnum :amount="amount" />
+    <StepOne :isPopupOne="isPopupOne" :orderId="orderId" @handleChange="handleChange" />
+    <StepTwo :isPopupTwo="isPopupTwo" :orderId="orderId" :amount="amount" @handleChange="handleChange" />
+    <StepThree :isPopupThree="isPopupThree" :orderId="orderId" @handleChange="handleChange" />
+    <StepFour :isPopupFour="isPopupFour" :orderId="orderId" @handleChange="handleChange" />
+    <StepFive :isPopupFive="isPopupFive" :orderId="orderId" @handleChange="handleChange" />
   </div>
 </template>
 
@@ -20,7 +20,13 @@ export default {
   name: 'SocialSecurity',
   data() {
     return {
-
+      amount: this.$route.query.amount,
+      orderId: this.$route.query.orderId,
+      isPopupOne: true,
+      isPopupTwo: false,
+      isPopupThree: false,
+      isPopupFour: false,
+      isPopupFive: false
     }
   },
   components: {
@@ -34,6 +40,38 @@ export default {
   mounted() {
   },
   methods: {
+    handleChange(val, data) {
+      let vm = this
+      switch (val) {
+        case '1':
+          vm.amount = data.amount
+          vm.orderId = data.orderId
+          vm.isPopupOne = false
+          vm.isPopupTwo = true
+          vm.isPopupThree = false
+          vm.isPopupFour = false
+          vm.isPopupFive = false
+          break
+        case '2':
+          vm.amount = data.amount
+          vm.orderId = data.orderId
+          vm.isPopupOne = false
+          vm.isPopupTwo = false
+          vm.isPopupThree = true
+          vm.isPopupFour = false
+          vm.isPopupFive = false
+          break
+        case '3':
+
+          break
+        case '4':
+
+          break
+        case '5':
+
+          break
+      }
+    }
   }
 }
 </script>

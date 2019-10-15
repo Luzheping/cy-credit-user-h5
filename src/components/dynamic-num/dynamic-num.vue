@@ -15,9 +15,48 @@
 import DigitRoll from '@huoyu/vue-digitroll'
 export default {
   name: 'Dynamic-num',
+  props: {
+    amount: {
+      required: true,
+      default: '000'
+    }
+  },
+  watch: {
+    amount(val) {
+      let vm = this
+      let amount = val / 10000
+      let len = amount.toString().length
+      switch (len) {
+        case 1:
+          amount = `00${amount}`
+          break
+        case 2:
+          amount = `0${amount}`
+          break
+        case 3:
+          amount = `${amount}`
+          break
+      }
+      vm.digits = amount
+    }
+  },
   data() {
+    let vm = this
+    let amount = vm.amount / 10000
+    let len = amount.toString().length
+    switch (len) {
+      case 1:
+        amount = `00${amount}`
+        break
+      case 2:
+        amount = `0${amount}`
+        break
+      case 3:
+        amount = `${amount}`
+        break
+    }
     return {
-      digits: '000'
+      digits: amount
     }
   },
   components: {
@@ -56,34 +95,35 @@ export default {
 
 <style scoped lang='less'>
 .dynamic-num {
-  background: #3077FF;
-  height:293px;
-  padding-top:60px;
+  background: #3077ff;
+  height: 293px;
+  padding-top: 30px;
   .header {
-    width:317px;
-    height:129px;
-    margin:0 auto;
+    width: 317px;
+    height: 129px;
+    margin: 0 auto;
     text-align: center;
-    background: #1B62EA;
-    border-radius:8px;
-    .title{
+    background: #1b62ea;
+    border-radius: 8px;
+    .title {
       font-size: 14px;
       color: #fff;
       padding-top: 10px;
-      &::before,&::after{
+      &::before,
+      &::after {
         display: inline-block;
         content: "";
         background: #fff;
-        width:10px;
-        height:2px;
-        margin:0 10px 3px;
+        width: 10px;
+        height: 2px;
+        margin: 0 10px 3px;
       }
     }
     .num {
       position: relative;
       width: 280px;
-      margin:0 auto;
-      margin-top:-7px;
+      margin: 0 auto;
+      margin-top: -7px;
       background: url("../../assets/images/dynamic-num/num-bg.png") no-repeat;
       background-size: 280px 70px;
       .ft {
@@ -99,8 +139,8 @@ export default {
       }
     }
   }
-  .tips{
-    color: #F9E382;
+  .tips {
+    color: #f9e382;
   }
 }
 </style>

@@ -20,7 +20,6 @@
           <span class="fw">工作年限</span>
         </div>
         <md-button type="primary">下一题</md-button>
-        <div class="pre-btn">上一题</div>
       </div>
     </md-popup>
   </div>
@@ -29,11 +28,27 @@
 <script>
 export default {
   name: 'stepThree',
+  props: {
+    isPopupThree: {
+      default: false
+    }
+  },
   data() {
     return {
-      isPopupShow: false,
-      checked: '0'
+      isPopupShow: this.isPopupThree,
+      checked: ''
     }
+  },
+  watch: {
+    checked() {
+      this.$emit('handleChange', '3')
+    },
+    isPopupThree(val) {
+      this.isPopupShow = val
+    }
+  },
+  mounted() {
+    document.title = '职业信息'
   },
   methods: {
   }
@@ -66,12 +81,6 @@ export default {
       &>span:nth-child(2){
         float: right;
       }
-    }
-    .pre-btn{
-      color:#3077FF;
-      font-size: 14px;
-      text-align: center;
-      margin-top:10px;
     }
   }
 }

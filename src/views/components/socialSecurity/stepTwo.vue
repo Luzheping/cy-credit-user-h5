@@ -10,20 +10,53 @@
           <md-radio name="0" v-model="checked" label="有" />
           <md-radio name="1" v-model="checked" label="无" />
         </div>
-        <div class="pre-btn">上一题</div>
       </div>
     </md-popup>
   </div>
 </template>
 
 <script>
+import { queryProvident } from '@/api/socialSecurity'
 export default {
   name: 'stepTwo',
+  props: {
+    isPopupTwo: {
+      default: false
+    },
+    orderId: {
+      default: ''
+    },
+    amount: {
+      default: ''
+    }
+  },
   data() {
     return {
-      isPopupShow: false,
-      checked: '0'
+      isPopupShow: this.isPopupTwo,
+      checked: ''
     }
+  },
+  watch: {
+    checked() {
+      let vm = this
+      let params = {
+        id: vm.orderId,
+        amount: vm.amount,
+        houseProvident: vm.checked
+      }
+      queryProvident(params).then(res => {
+        if (res.code === 200) {
+          let data = res.data
+          vm.$emit('handleChange', '2', data)
+        }
+      })
+    },
+    isPopupTwo(val) {
+      this.isPopupShow = val
+    }
+  },
+  mounted() {
+    document.title = '公积金信息'
   },
   methods: {
   }
@@ -36,31 +69,25 @@ export default {
     height: 399px;
     border-radius: 14px 14px 0 0;
     background: #fff;
-    padding:40px 20px 60px 20px;
+    padding: 40px 20px 60px 20px;
     .title {
       font-size: 14px;
-      height:20px;
-      &::before{
+      height: 20px;
+      &::before {
         content: "";
         float: left;
-        width:4px;
-        height:14px;
-        background: #3077FF;
-        margin-top:3px;
-        margin-right:5px;
+        width: 4px;
+        height: 14px;
+        background: #3077ff;
+        margin-top: 3px;
+        margin-right: 5px;
       }
-      &>span:nth-child(1){
+      & > span:nth-child(1) {
         float: left;
       }
-      &>span:nth-child(2){
+      & > span:nth-child(2) {
         float: right;
       }
-    }
-    .pre-btn{
-      color:#3077FF;
-      font-size: 14px;
-      text-align: center;
-      margin-top:100px;
     }
   }
 }

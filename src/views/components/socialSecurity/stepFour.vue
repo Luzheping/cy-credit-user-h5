@@ -28,6 +28,9 @@ export default {
       checked: '0'
     }
   },
+  mounted() {
+    document.title = '房产信息'
+  },
   methods: {
   }
 }

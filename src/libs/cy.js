@@ -50,6 +50,7 @@ const getToken = function(success) {
     if (res.code === 200) {
       let data = res.data
       setToken(data.token)
+      sessionStorage.userInfo = JSON.stringify(data.WeChatLoginUser)
       success && success()
     }
   })

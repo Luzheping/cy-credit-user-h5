@@ -18,3 +18,11 @@ export const querySendSms = params => {
     params
   })
 }
+
+export const postSave = params => {
+  return axios.request({
+    url: api + '/user/order/save',
+    method: 'post',
+    data: params
+  })
+}

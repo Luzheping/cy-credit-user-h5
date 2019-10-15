@@ -20,9 +20,12 @@ export default {
   name: 'stepFour',
   data() {
     return {
-      isPopupShow: true,
+      isPopupShow: false,
       checked: '0'
     }
+  },
+  mounted() {
+    document.title = '车辆信息'
   },
   methods: {
   }
