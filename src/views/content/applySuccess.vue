@@ -7,8 +7,8 @@
       <img src="../../assets/images/applySuccess/icon.png" alt="">
       <p class="text">最高可贷</p>
       <md-amount :value="val" :duration="800" transition class="amount"></md-amount>
-      <md-button type="primary" class="btn-apply">申请信用贷款</md-button>
-      <md-button type="primary" class="btn-contact">请银行联系我</md-button>
+      <md-button type="primary" class="btn-apply" @click="goApply">申请信用贷款</md-button>
+      <md-button type="primary" class="btn-contact" @click="goContact">请银行联系我</md-button>
     </div>
   </div>
 </template>
@@ -18,18 +18,21 @@ export default {
   name: 'ApplySuccess',
   data() {
     return {
-      val: 1000
+      val: window.amount
     }
   },
   mounted() {
-    setTimeout(() => {
-      this.val = 1500
-      setTimeout(() => {
-        this.val = 500
-      }, 2000)
-    }, 2000)
   },
-  methods: {}
+  methods: {
+    goContact() {
+      let vm = this
+      vm.$router.push('/contact')
+    },
+    goApply() {
+      let vm = this
+      vm.$router.push('/credit')
+    }
+  }
 }
 </script>
 
@@ -72,17 +75,17 @@ export default {
       width: 260px;
       height: 40px;
       border-radius: 100px;
-      &::after{
+      &::after {
         display: none;
       }
     }
-    .btn-apply{
-      margin-top:40px;
+    .btn-apply {
+      margin-top: 40px;
     }
-    .btn-contact{
+    .btn-contact {
       background: #fff;
-      border:1px solid rgba(48,119,255,1);
-      color:#3077FF;
+      border: 1px solid rgba(48, 119, 255, 1);
+      color: #3077ff;
     }
   }
 }

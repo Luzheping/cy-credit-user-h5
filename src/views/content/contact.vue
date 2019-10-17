@@ -7,7 +7,7 @@
       <img src="../../assets/images/contact/icon.png" alt="">
       <p class="tips">系统已将您的需求推荐给客服</p>
       <p class="text">请保持您的手机畅通</p>
-      <md-button type="primary" class="btn-back">返回</md-button>
+      <md-button type="primary" class="btn-back" @click="goBack">返回</md-button>
     </div>
   </div>
 </template>
@@ -19,7 +19,12 @@ export default {
     return {
     }
   },
-  methods: {}
+  methods: {
+    goBack() {
+      let vm = this
+      vm.$router.push('/index')
+    }
+  }
 }
 </script>
 

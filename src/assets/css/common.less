@@ -171,7 +171,7 @@ img {
   color: @font-cl-3;
 }
 .cl5 {
-  color: #C3C6D3;
+  color: #c3c6d3;
 }
 .w-l {
   width: 80%;
@@ -210,28 +210,68 @@ img {
 
 // mand-mobile样式重写
 .md-button {
-  height:44px;
-  margin:0 auto;
+  height: 44px;
+  margin: 0 auto;
   margin-top: 20px;
   font-size: 14px;
-  border-radius:2px;
+  border-radius: 2px;
 }
 
 // mand-mobile样式重写
-.md-radio-label{
+.md-radio-label {
   font-size: 16px;
 }
-.md-icon.icon-font.md{
+.md-icon.icon-font.md {
   font-size: 26px;
 }
-.md-radio{
-  margin:30px 0;
+.md-radio {
+  margin: 30px 0;
 }
 
 // mand-mobile样式Toast重写
-.md-toast-content{
-  padding:10px 17px;
+.md-toast-content {
+  padding: 10px 17px;
 }
-.md-toast-text{
+.md-toast-text {
   font-size: 16px;
+}
+
+// mand-mobile样式popup重写
+.md-popup-box.md-slide-up {
+  .md-popup-title-bar > div {
+    padding: 0;
+  }
+  .md-popup-title-bar {
+    height: 40px;
+  }
+  .title-bar-left.md-popup-cancel {
+    padding: 15px 0 0 40px;
+    font-size: 16px;
+  }
+  .title-bar-right.md-popup-confirm {
+    padding: 15px 40px 0 0;
+    font-size: 16px;
+  }
+}
+
+.stepFour,.stepFive {
+  .md-field-item.md-input-item {
+    width: 336px;
+    height: 50px;
+    border: 1px solid rgba(243, 243, 244, 1);
+    border-radius: 2px;
+    margin: 10px 0 23px 0;
+    .md-field-item-content {
+      min-height: 0;
+      height: 50px;
+      &::before {
+        content: none;
+      }
+    }
+    .md-input-item-input {
+      height: 50px;
+      font-size: 16px;
+      padding: 10px;
+    }
+  }
 }

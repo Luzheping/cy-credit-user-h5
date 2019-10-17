@@ -48,16 +48,18 @@ export default {
         if (res.code === 200) {
           let data = res.data
           vm.$emit('handleChange', '2', data)
+          window.amount = data.amount
         }
       })
     },
     isPopupTwo(val) {
       this.isPopupShow = val
+      if (val) {
+        document.title = '公积金信息'
+      }
     }
   },
-  mounted() {
-    document.title = '公积金信息'
-  },
+  //   document.title = '公积金信息'
   methods: {
   }
 }

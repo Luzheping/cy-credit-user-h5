@@ -62,13 +62,27 @@ export default {
           vm.isPopupFive = false
           break
         case '3':
-
+          vm.amount = data.amount
+          vm.orderId = data.orderId
+          vm.isPopupOne = false
+          vm.isPopupTwo = false
+          vm.isPopupThree = false
+          vm.isPopupFour = true
+          vm.isPopupFive = false
           break
         case '4':
-
+          vm.amount = data.amount
+          vm.orderId = data.orderId
+          vm.isPopupOne = false
+          vm.isPopupTwo = false
+          vm.isPopupThree = false
+          vm.isPopupFour = false
+          vm.isPopupFive = true
           break
         case '5':
-
+          vm.amount = data.amount
+          vm.orderId = data.orderId
+          vm.$router.push('/applySuccess')
           break
       }
     }
