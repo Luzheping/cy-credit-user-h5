@@ -18,7 +18,7 @@ export default {
   name: 'ApplySuccess',
   data() {
     return {
-      val: window.amount
+      val: window.amount / 10000
     }
   },
   mounted() {

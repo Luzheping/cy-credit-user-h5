@@ -56,7 +56,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     Vue.prototype.$globalToast.close()
-    if (response.data.code !== '200') {
+    if (response.data.code !== 200) {
       Vue.prototype.$globalToast.warning({
         duration: 3000,
         message: response.data.msg
