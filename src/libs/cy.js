@@ -7,7 +7,10 @@ const getToken = function(success) {
   }
   let url = location.href
   let code = ''
-  let appid = 'wx9a8a8d1b51655d58'
+  // 开发
+  // let appid = 'wx9a8a8d1b51655d58'
+  // 测试
+  let appid = 'wx565e9d850275f8a9'
   // 获取token
   if (url.indexOf('?') > -1) {
     code = url.split('?code=')[1]
@@ -36,7 +39,7 @@ const getToken = function(success) {
     }
     // 后端接口来跳转前端回填地址
     url =
-      'http://172.17.210.100:8080/wx/url/get?returnUrl=http://172.17.203.139:8080/index'
+      'http://52.83.51.72:8082/cysk/wx/url/get?returnUrl=http://52.83.51.72:8081/user'
     location.href =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
       appid +
