@@ -12,8 +12,8 @@ const getToken = function(success) {
   // 测试
   let appid = 'wx565e9d850275f8a9'
   // 获取token
-  if (url.indexOf('?') > -1) {
-    code = url.split('?code=')[1]
+  if (url.indexOf('code=') > -1) {
+    code = url.split('code=')[1]
     // code = url.split('?')[1]
     // if (url.indexOf('#') > -1) {
     //   code = code.split('#')[0]
@@ -45,7 +45,7 @@ const getToken = function(success) {
       appid +
       '&redirect_uri=' +
       encodeURI(url) +
-      '&response_type=code&scope=snsapi_userinfo#wechat_redirect'
+      '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
     return
   }
   let codeProcess = decodeURIComponent(code)
