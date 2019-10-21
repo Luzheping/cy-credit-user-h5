@@ -59,7 +59,6 @@ export default {
       }
     }
   },
-  //   document.title = '公积金信息'
   methods: {
   }
 }

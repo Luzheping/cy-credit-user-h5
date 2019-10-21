@@ -64,9 +64,6 @@ export default {
       }
     })
   },
-  // mounted() {
-  //   document.title = '房产信息'
-  // },
   methods: {
     handleSure(val) {
       this.type = val.key

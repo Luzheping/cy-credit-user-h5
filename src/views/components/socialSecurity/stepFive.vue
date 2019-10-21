@@ -59,9 +59,6 @@ export default {
       }
     })
   },
-  // mounted() {
-  //   document.title = '车辆信息'
-  // },
   methods: {
     handleSure(val) {
       this.type = val.key

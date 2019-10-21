@@ -122,9 +122,6 @@ export default {
       this.isPopupShow = val
     }
   },
-  // mounted() {
-  //   document.title = '职业信息'
-  // },
   methods: {
     handleSure1(val) {
       this.incomeType = val.key

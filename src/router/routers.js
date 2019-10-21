@@ -8,7 +8,7 @@ export default [
     path: '/index',
     name: 'index',
     meta: {
-      title: '车云信贷'
+      title: '小豆芽助手'
     },
     component: () => import('@/views/index.vue')
   },
@@ -16,7 +16,7 @@ export default [
     path: '/socialSecurity',
     name: 'socialSecurity',
     meta: {
-      title: '社保信息'
+      title: '小豆芽助手'
     },
     component: () => import('@/views/content/socialSecurity.vue')
   },
@@ -24,7 +24,7 @@ export default [
     path: '/applySuccess',
     name: 'applySuccess',
     meta: {
-      title: '申请成功'
+      title: '小豆芽助手'
     },
     component: () => import('@/views/content/applySuccess.vue')
   },
@@ -32,7 +32,7 @@ export default [
     path: '/contact',
     name: 'contact',
     meta: {
-      title: '联系银行'
+      title: '小豆芽助手'
     },
     component: () => import('@/views/content/contact.vue')
   },
@@ -40,7 +40,7 @@ export default [
     path: '/credit',
     name: 'credit',
     meta: {
-      title: '信用贷款'
+      title: '小豆芽助手'
     },
     component: () => import('@/views/content/credit.vue')
   },
