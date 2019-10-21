@@ -47,7 +47,9 @@ export default {
       time: 0,
       disabled: false,
       phone: '',
-      openId: JSON.parse(sessionStorage.userInfo).openid,
+      // 解决bug
+      // openId: JSON.parse(sessionStorage.userInfo).openid,
+      // openId: JSON.parse(localStorage['userInfo']).openid,
       customerName: '',
       expire: '',
       loanAmount: '',
@@ -151,7 +153,7 @@ export default {
         expire: vm.expire,
         loanAmount: vm.loanAmount,
         mobile: vm.phone,
-        openId: vm.openId,
+        // openId: vm.openId,
         verifyCode: vm.verifyCode
       }
       postSave(params).then(res => {
