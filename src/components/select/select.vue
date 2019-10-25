@@ -6,8 +6,9 @@
     </div>
     <md-popup v-model="isPopupShow" position="bottom">
       <md-popup-title-bar ok-text="确认" cancel-text="取消" @confirm="handleOk" @cancel="handleCancel"></md-popup-title-bar>
-      <md-picker ref="picker" :data="pickerData" @initialed="onPickerInitialed" @change="onPickerConfirm" is-view>
-      </md-picker>
+      <!-- <md-picker ref="picker" :data="pickerData" @initialed="onPickerInitialed" @change="onPickerConfirm" is-view>
+      </md-picker> -->
+      <mt-picker :slots="slots" :valueKey="'text'" @change="onValuesChange"></mt-picker>
     </md-popup>
   </div>
 </template>
@@ -25,6 +26,13 @@ export default {
   },
   data() {
     return {
+      slots: [
+        {
+          flex: 1,
+          values: [],
+          className: 'slot-bg'
+        }
+      ],
       text: '', // 确认后的text
       sureData: '',
       pickerValue: '', // picker过渡存储
@@ -34,7 +42,8 @@ export default {
   },
   watch: {
     queryList(val) {
-      this.pickerData.push(val)
+      // this.pickerData.push(val)
+      this.slots[0].values = val
       this.text = val[0].text
       this.pickerValue = val[0].text
     }
@@ -64,22 +73,11 @@ export default {
         this.sureData = value
       }
     },
-    getColumnValues(picker) {
-      // const value = this.$refs[picker].getColumnValues()
-      // Dialog.alert({
-      //   content: `<pre>${JSON.stringify(value)}</pre>`,
-      // })
-    },
-    getColumnIndexs(picker) {
-      // const value = this.$refs[picker].getColumnIndexs()
-      // Dialog.alert({
-      //   content: `<pre>${JSON.stringify(value)}</pre>`,
-      // })
-    },
-    setColumnValues(picker) {
-      // this.$refs[picker].setColumnValues(0, this.pickerDataNew, vm => {
-      //   vm.refresh(null, 0)
-      // })
+    onValuesChange(picker, values) {
+      if (values[0]) {
+        this.pickerValue = values[0].text
+        this.sureData = values[0]
+      }
     }
   }
 }

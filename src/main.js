@@ -13,6 +13,8 @@ import '@/assets/css/common.less'
 import moment from 'moment'
 import FastClick from 'fastclick'
 import { getToken } from './libs/cy'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 
 if ('addEventListener' in document && 'ontouchstart' in window) {
   FastClick.prototype.focus = function (targetElement) {
@@ -26,6 +28,7 @@ if ('addEventListener' in document && 'ontouchstart' in window) {
 Vue.use(mandMobile)
 Vue.use(globalToast)
 Vue.use(filter)
+Vue.use(MintUI)
 
 Vue.component('my-input', myInput) // 公共input
 

@@ -11,6 +11,8 @@ const getToken = function(success) {
   // let appid = 'wx9a8a8d1b51655d58'
   // 测试
   let appid = 'wx565e9d850275f8a9'
+  // 测试公众号
+  // let appid = 'wx76b9ead3105c56fe'
   // 获取token
   if (url.indexOf('code=') > -1) {
     code = url.split('code=')[1]
