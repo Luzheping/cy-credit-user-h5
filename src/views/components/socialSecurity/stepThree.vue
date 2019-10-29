@@ -67,7 +67,7 @@ export default {
       incomeType: 0,
       salary: 0,
       workYear: 0,
-      establishTime: '',
+      establishTime: null,
       turnover: 0
     }
   },

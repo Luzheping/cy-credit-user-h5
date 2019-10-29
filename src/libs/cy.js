@@ -44,7 +44,7 @@ const getToken = function(success) {
     url =
       'http://52.83.51.72:8082/cysk/wx/url/get?returnUrl=http://172.17.203.139:8080/user/'
     // 测试环境修改切换
-      // url =
+    // url =
     //   'http://52.83.51.72:8082/cysk/wx/url/get?returnUrl=http://52.83.51.72:8081/user'
     location.href =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
