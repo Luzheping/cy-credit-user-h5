@@ -7,7 +7,7 @@
           <span class="cl5">5/5</span>
            <Select :queryList="carData" @handleSure="handleSure" />
         </div>
-        <div class="title clear mrb-40">
+        <div class="title clear mrb-40"  v-show="type!=1">
           <span class="fw">车辆价值 (万元)</span>
           <md-input-item placeholder="请输入房产价值（万）" v-model="carMoney"></md-input-item>
         </div>
@@ -26,7 +26,7 @@ export default {
     return {
       isPopupShow: this.isPopupFive,
       carData: '',
-      type: 0,
+      type: 1,
       carMoney: ''
     }
   },

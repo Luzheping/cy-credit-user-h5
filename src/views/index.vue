@@ -20,8 +20,8 @@
             <md-input-item ref="name" preview-type="text" v-model="expire" title="贷款期限" placeholder="您的期望贷款期限" is-title-latent>
               <div class="ft3" slot="right">个月</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="customerName" title="姓名" placeholder="您的姓名" is-title-latent></md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" placeholder="您的手机号" is-title-latent>
+            <md-input-item ref="name" preview-type="text" v-model="customerName" title="姓名" placeholder="您的姓名" maxlength="10" @change="handleName" :error="errorName" is-title-latent></md-input-item>
+            <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" placeholder="您的手机号" maxlength="11" is-title-latent>
               <div class="ft4" slot="right" @click="handleGetCode">{{btnContent}}</div>
             </md-input-item>
             <md-input-item ref="name" preview-type="text" v-model="verifyCode" title="验证码" placeholder="6位数验证码" is-title-latent></md-input-item>
@@ -43,6 +43,7 @@ export default {
   name: 'Index',
   data() {
     return {
+      errorName: '',
       btnContent: '获取验证码',
       time: 0,
       disabled: false,
@@ -85,6 +86,14 @@ export default {
     })
   },
   methods: {
+    handleName(name, value) {
+      let reg = /^[A-Za-z\u4e00-\u9fa5]+$/
+      if (!reg.test(value)) {
+        this.errorName = '姓名只能为汉字或字母'
+        return
+      }
+      this.errorName = ''
+    },
     // 点击获取验证码
     handleGetCode() {
       var vm = this

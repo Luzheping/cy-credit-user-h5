@@ -7,11 +7,11 @@
           <span class="cl5">4/5</span>
           <Select :queryList="houseData" @handleSure="handleSure" />
         </div>
-        <div class="title clear mrb-40">
+        <div class="title clear mrb-40" v-show="type!=1">
           <span class="fw">房产价值 (万元)</span>
           <md-input-item placeholder="请输入房产价值（万）" v-model="houseMoney"></md-input-item>
         </div>
-        <div class="title clear mrb-40">
+        <div class="title clear mrb-40" v-show="type!=1">
           <span class="fw">房产面积 (平方)</span>
           <md-input-item placeholder="请输入房产面积（平方）" v-model="houseArea"></md-input-item>
         </div>
@@ -30,7 +30,7 @@ export default {
     return {
       isPopupShow: this.isPopupFour,
       houseData: '',
-      type: 0,
+      type: 1,
       houseMoney: '',
       houseArea: ''
     }
