@@ -7,8 +7,8 @@
           <span class="cl5">2/5</span>
         </div>
         <div class="mrl-10">
-          <md-radio name="0" v-model="checked" label="有" />
-          <md-radio name="1" v-model="checked" label="无" />
+          <md-radio name="1" v-model="checked" label="有" />
+          <md-radio name="0" v-model="checked" label="无" />
         </div>
       </div>
     </md-popup>
