@@ -157,6 +157,7 @@ export default {
     },
     handleSubmit() {
       let vm = this
+      let myreg = /^[1][3-9][0-9]{9}$/
       let params = {
         customerName: vm.customerName,
         expire: vm.expire,
@@ -164,6 +165,54 @@ export default {
         mobile: vm.phone,
         // openId: vm.openId,
         verifyCode: vm.verifyCode
+      }
+      if (!vm.loanAmount) {
+        Toast({
+          content: '贷款金额不能为空',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
+      if (!vm.expire) {
+        Toast({
+          content: '贷款期限不能为空',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
+      if (!vm.customerName) {
+        Toast({
+          content: '姓名不能为空',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
+      if (!vm.phone) {
+        Toast({
+          content: '手机号码不能为空',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
+      if (!vm.verifyCode) {
+        Toast({
+          content: '验证码不能为空',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
+      }
+      if (!myreg.test(vm.phone)) {
+        Toast({
+          content: '手机号码格式错误',
+          position: 'bottom',
+          duration: 3000
+        })
+        return
       }
       postSave(params).then(res => {
         if (res.code === 200) {
