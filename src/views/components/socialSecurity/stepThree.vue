@@ -27,11 +27,11 @@
         <div v-show="checked==2">
           <div class="title clear mrb-40">
             <span class="fw">成立时间</span>
-            <Select textProp="企业主" />
+            <SelectDate @handleSure="handleSure4" />
           </div>
           <div class="title clear mrb-40">
             <span class="fw">营业额</span>
-            <Select :queryList="turnoverData" />
+            <Select :queryList="turnoverData" @handleSure="handleSure5" />
           </div>
         </div>
         <md-button type="primary" @click="handleNext">下一题</md-button>
@@ -41,7 +41,8 @@
 </template>
 
 <script>
-import { Select } from '@/components'
+import moment from 'moment'
+import { Select, SelectDate } from '@/components'
 import { postWork, getConstant } from '@/api/socialSecurity'
 export default {
   name: 'stepThree',
@@ -54,7 +55,8 @@ export default {
     }
   },
   components: {
-    Select
+    Select,
+    SelectDate
   },
   data() {
     return {
@@ -67,7 +69,7 @@ export default {
       incomeType: 0,
       salary: 0,
       workYear: 0,
-      establishTime: null,
+      establishTime: moment().format('YYYY-MM-DD'),
       turnover: 0
     }
   },
@@ -131,6 +133,12 @@ export default {
     },
     handleSure3(val) {
       this.workYear = val.key
+    },
+    handleSure4(val) {
+      this.establishTime = val
+    },
+    handleSure5(val) {
+      this.turnover = val.key
     },
     handleNext() {
       let vm = this
