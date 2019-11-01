@@ -18,7 +18,7 @@ export default {
   name: 'ApplySuccess',
   data() {
     return {
-      val: window.amount / 10000
+      val: window.amount
     }
   },
   mounted() {
@@ -68,7 +68,7 @@ export default {
       font-size: 36px;
       font-weight: bold;
       &::after {
-        content: "万";
+        content: "元";
       }
     }
     .md-button {

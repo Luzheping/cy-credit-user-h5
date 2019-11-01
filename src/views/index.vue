@@ -14,19 +14,21 @@
         </div>
         <div>
           <md-field>
-            <md-input-item ref="name" preview-type="text" v-model="loanAmount" title="贷款金额" placeholder="您的期望贷款金额" is-title-latent>
+            <md-input-item ref="name" preview-type="text" v-model="loanAmount" title="贷款金额" placeholder="您的期望贷款金额" is-title-latent @change="handleChange">
               <div class="ft3" slot="right">万元</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="expire" title="贷款期限" placeholder="您的期望贷款期限" is-title-latent>
+            <md-input-item ref="name" preview-type="text" v-model="expire" title="贷款期限" placeholder="您的期望贷款期限" is-title-latent @change="handleChange">
               <div class="ft3" slot="right">个月</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="customerName" title="姓名" placeholder="您的姓名" maxlength="10" @change="handleName" :error="errorName" is-title-latent></md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" placeholder="您的手机号" maxlength="11" is-title-latent>
+            <md-input-item ref="name" preview-type="text" v-model="customerName" title="姓名" placeholder="您的姓名" maxlength="10" @change="handleName" :error="errorName" is-title-latent>
+            </md-input-item>
+            <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" placeholder="您的手机号" maxlength="11" is-title-latent @change="handleChange">
               <div class="ft4" slot="right" @click="handleGetCode">{{btnContent}}</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="verifyCode" title="验证码" placeholder="6位数验证码" is-title-latent></md-input-item>
+            <md-input-item ref="name" preview-type="text" v-model="verifyCode" title="验证码" placeholder="6位数验证码" is-title-latent @change="handleChange"></md-input-item>
           </md-field>
-          <md-button type="primary" @click="handleSubmit">测算额度</md-button>
+          <md-button type="primary" @click="handleSubmit" v-show="flag">测算额度</md-button>
+          <md-button type="primary" class="btn-g" v-show="!flag">测算额度</md-button>
         </div>
       </div>
     </div>
@@ -43,6 +45,7 @@ export default {
   name: 'Index',
   data() {
     return {
+      flag: false,
       errorName: '',
       btnContent: '获取验证码',
       time: 0,
@@ -86,13 +89,23 @@ export default {
     })
   },
   methods: {
+    handleChange() {
+      let vm = this
+      if (vm.loanAmount && vm.expire && vm.customerName && vm.phone && vm.verifyCode && vm.errorName === '') {
+        vm.flag = true
+        return
+      }
+      vm.flag = false
+    },
     handleName(name, value) {
       let reg = /^[A-Za-z\u4e00-\u9fa5]+$/
       if (!reg.test(value)) {
         this.errorName = '姓名只能为汉字或字母'
+        this.flag = false
         return
       }
       this.errorName = ''
+      this.handleChange()
     },
     // 点击获取验证码
     handleGetCode() {
@@ -166,46 +179,46 @@ export default {
         // openId: vm.openId,
         verifyCode: vm.verifyCode
       }
-      if (!vm.loanAmount) {
-        Toast({
-          content: '贷款金额不能为空',
-          position: 'bottom',
-          duration: 3000
-        })
-        return
-      }
-      if (!vm.expire) {
-        Toast({
-          content: '贷款期限不能为空',
-          position: 'bottom',
-          duration: 3000
-        })
-        return
-      }
-      if (!vm.customerName) {
-        Toast({
-          content: '姓名不能为空',
-          position: 'bottom',
-          duration: 3000
-        })
-        return
-      }
-      if (!vm.phone) {
-        Toast({
-          content: '手机号码不能为空',
-          position: 'bottom',
-          duration: 3000
-        })
-        return
-      }
-      if (!vm.verifyCode) {
-        Toast({
-          content: '验证码不能为空',
-          position: 'bottom',
-          duration: 3000
-        })
-        return
-      }
+      // if (!vm.loanAmount) {
+      //   Toast({
+      //     content: '贷款金额不能为空',
+      //     position: 'bottom',
+      //     duration: 3000
+      //   })
+      //   return
+      // }
+      // if (!vm.expire) {
+      //   Toast({
+      //     content: '贷款期限不能为空',
+      //     position: 'bottom',
+      //     duration: 3000
+      //   })
+      //   return
+      // }
+      // if (!vm.customerName) {
+      //   Toast({
+      //     content: '姓名不能为空',
+      //     position: 'bottom',
+      //     duration: 3000
+      //   })
+      //   return
+      // }
+      // if (!vm.phone) {
+      //   Toast({
+      //     content: '手机号码不能为空',
+      //     position: 'bottom',
+      //     duration: 3000
+      //   })
+      //   return
+      // }
+      // if (!vm.verifyCode) {
+      //   Toast({
+      //     content: '验证码不能为空',
+      //     position: 'bottom',
+      //     duration: 3000
+      //   })
+      //   return
+      // }
       if (!myreg.test(vm.phone)) {
         Toast({
           content: '手机号码格式错误',
@@ -284,6 +297,10 @@ export default {
   .md-button {
     width: 320px;
     border-radius: 2px;
+  }
+  .btn-g {
+    background: rgba(0, 122, 255, 1);
+    opacity: 0.3;
   }
 }
 </style>
