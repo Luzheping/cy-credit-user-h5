@@ -14,18 +14,18 @@
         </div>
         <div>
           <md-field>
-            <md-input-item ref="name" preview-type="text" v-model="loanAmount" title="贷款金额" placeholder="您的期望贷款金额" is-title-latent @change="handleChange">
+            <md-input-item ref="name" preview-type="text" v-model="loanAmount" title="贷款金额" placeholder="您的期望贷款金额" is-title-latent @change="handleChange" @blur="scrollVal">
               <div class="ft3" slot="right">万元</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="expire" title="贷款期限" placeholder="您的期望贷款期限" is-title-latent @change="handleChange">
+            <md-input-item ref="name" preview-type="text" v-model="expire" title="贷款期限" placeholder="您的期望贷款期限" is-title-latent @change="handleChange" @blur="scrollVal">
               <div class="ft3" slot="right">个月</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="customerName" title="姓名" placeholder="您的姓名" maxlength="10" @change="handleName" :error="errorName" is-title-latent>
+            <md-input-item ref="name" preview-type="text" v-model="customerName" title="姓名" placeholder="您的姓名" maxlength="10" @change="handleName" @blur="scrollVal" :error="errorName" is-title-latent>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" placeholder="您的手机号" maxlength="11" is-title-latent @change="handleChange">
+            <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" placeholder="您的手机号" maxlength="11" is-title-latent @change="handleChange" @blur="scrollVal">
               <div class="ft4" slot="right" @click="handleGetCode">{{btnContent}}</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="verifyCode" title="验证码" placeholder="6位数验证码" is-title-latent @change="handleChange"></md-input-item>
+            <md-input-item ref="name" preview-type="text" v-model="verifyCode" title="验证码" placeholder="6位数验证码" is-title-latent @change="handleChange" @blur="scrollVal"></md-input-item>
           </md-field>
           <md-button type="primary" @click="handleSubmit" v-show="flag">测算额度</md-button>
           <md-button type="primary" class="btn-g" v-show="!flag">测算额度</md-button>
@@ -40,6 +40,7 @@ import icon1 from '../assets/images/index/icon1.png'
 import icon2 from '../assets/images/index/icon2.png'
 import icon3 from '../assets/images/index/icon3.png'
 import { queryStatistical, querySendSms, postSave } from '@/api/index'
+import { scrollTo } from '@/libs/utils'
 import { Toast } from 'mand-mobile'
 export default {
   name: 'Index',
@@ -89,6 +90,9 @@ export default {
     })
   },
   methods: {
+    scrollVal () {
+      scrollTo()
+    },
     handleChange() {
       let vm = this
       if (vm.loanAmount && vm.expire && vm.customerName && vm.phone && vm.verifyCode && vm.errorName === '') {

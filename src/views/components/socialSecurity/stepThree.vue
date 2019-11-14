@@ -30,7 +30,7 @@
             <SelectDate @handleSure="handleSure4" />
           </div>
           <div class="title clear mrb-40">
-            <span class="fw">营业额</span>
+            <span class="fw">年营业额</span>
             <Select :queryList="turnoverData" @handleSure="handleSure5" />
           </div>
         </div>

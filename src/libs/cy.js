@@ -10,7 +10,7 @@ const getToken = function(success) {
   // 开发
   // let appid = 'wx9a8a8d1b51655d58'
   // 测试
-  let appid = 'wx565e9d850275f8a9'
+  let appid = 'wx9a8a8d1b51655d58'
   // 测试公众号
   // let appid = 'wx76b9ead3105c56fe'
   // 获取token
@@ -42,10 +42,10 @@ const getToken = function(success) {
     // 后端接口来跳转前端回填地址
     // 开发环境修改切换
     url =
-      'http://52.83.51.72:8082/cysk/wx/url/get?returnUrl=http://172.17.203.139:8080/user/'
+      'http://52.82.81.239:8082/cysk/wx/url/get?returnUrl=http://172.17.210.141:8080/user/'
     // 测试环境修改切换
     // url =
-    //   'http://52.83.51.72:8082/cysk/wx/url/get?returnUrl=http://52.83.51.72:8081/user'
+    //   'http://52.82.81.239:8082/cysk/wx/url/get?returnUrl=http://52.82.81.239:8081/user'
     location.href =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
       appid +
