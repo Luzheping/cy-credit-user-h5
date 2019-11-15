@@ -1,5 +1,6 @@
 import { queryouth } from '../api/outh'
 import { setToken, getdToken } from './utils'
+import config from '../config'
 const getToken = function(success) {
   if (getdToken()) {
     success && success()
@@ -7,11 +8,10 @@ const getToken = function(success) {
   }
   let url = location.href
   let code = ''
-  // 开发
-  // let appid = 'wx9a8a8d1b51655d58'
+  let appid = config.appid
   // 测试
-  let appid = 'wx9a8a8d1b51655d58'
-  // 测试公众号
+  // let appid = 'wx9a8a8d1b51655d58'
+  // 生产
   // let appid = 'wx76b9ead3105c56fe'
   // 获取token
   if (url.indexOf('code=') > -1) {
@@ -40,12 +40,16 @@ const getToken = function(success) {
       return
     }
     // 后端接口来跳转前端回填地址
+    url = config.url
     // 开发环境修改切换
-    url =
-      'http://52.82.81.239:8082/cysk/wx/url/get?returnUrl=http://172.17.210.141:8080/user/'
+    // url =
+    //   'http://52.82.81.239:8082/cysk/wx/url/get?returnUrl=http://172.17.210.141:8080/user/'
     // 测试环境修改切换
     // url =
     //   'http://52.82.81.239:8082/cysk/wx/url/get?returnUrl=http://52.82.81.239:8081/user'
+    // 生产环境修改切换
+    // url =
+    //   'http://xdy.e-whole.com/cysk/wx/url/get?returnUrl=http://xdy.e-whole.com/user'
     location.href =
       'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
       appid +
