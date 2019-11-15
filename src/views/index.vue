@@ -25,7 +25,7 @@
             <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" placeholder="您的手机号" maxlength="11" is-title-latent @change="handleChange" @blur="scrollVal">
               <div class="ft4" slot="right" @click="handleGetCode">{{btnContent}}</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="verifyCode" title="验证码" placeholder="6位数验证码" is-title-latent @change="handleChange" @blur="scrollVal"></md-input-item>
+            <md-input-item ref="name" preview-type="text" v-model="verifyCode" title="验证码" placeholder="4位数验证码" is-title-latent @change="handleChange" @blur="scrollVal"></md-input-item>
           </md-field>
           <md-button type="primary" @click="handleSubmit" v-show="flag">测算额度</md-button>
           <md-button type="primary" class="btn-g" v-show="!flag">测算额度</md-button>
