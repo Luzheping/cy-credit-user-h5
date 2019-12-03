@@ -45,6 +45,46 @@ export default [
     component: () => import('@/views/content/credit.vue')
   },
   {
+    path: '/personCenter',
+    name: 'personCenter',
+    meta: {
+      title: '个人中心'
+    },
+    component: () => import('@/views/personCenter/personCenter.vue')
+  },
+  {
+    path: '/modPhone',
+    name: 'modPhone',
+    meta: {
+      title: '变更手机号'
+    },
+    component: () => import('@/views/personCenter/modPhone.vue')
+  },
+  {
+    path: '/contactMe',
+    name: 'contactMe',
+    meta: {
+      title: '联系过我'
+    },
+    component: () => import('@/views/personCenter/contactMe.vue')
+  },
+  {
+    path: '/callbackRecord',
+    name: 'callbackRecord',
+    meta: {
+      title: '回拨记录'
+    },
+    component: () => import('@/views/personCenter/callbackRecord.vue')
+  },
+  {
+    path: '/applyRecord',
+    name: 'applyRecord',
+    meta: {
+      title: '申请记录'
+    },
+    component: () => import('@/views/personCenter/applyRecord.vue')
+  },
+  {
     path: '/error404',
     name: 'error404',
     meta: {

@@ -6,7 +6,7 @@ switch (env) {
   case 'development':
     appid = 'wx9a8a8d1b51655d58'
     url =
-      'http://52.82.81.239:8082/cysk/wx/url/get?returnUrl=http://52.82.81.239:8081/user'
+      'http://52.82.81.239:8082/cysk/wx/url/get?returnUrl=http://172.17.203.139:8080/'
     break
   // 生产
   case 'production':
