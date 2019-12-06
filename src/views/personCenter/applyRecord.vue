@@ -1,22 +1,39 @@
 <template>
   <div class='applyRecord'>
     <div v-for="(item,i) in list" :key="i" class="item-box mrb-10">
-      <div class="item ft1">申请金额<span class="ft1 mrl-10">90万</span></div>
-      <div class="item ft1">申请时间<span class="ft1 mrl-10">8个月</span></div>
-      <div class="item mrt-10 ft1 teshu">申请时间<span class="ft2 mrl-10">2019-01-02 21:25:00</span></div>
+      <div class="item ft1">申请金额<span class="ft1 mrl-10">{{item.loanAmount}}万</span></div>
+      <div class="item ft1">申请时间<span class="ft1 mrl-10">{{item.expire}}个月</span></div>
+      <div class="item mrt-10 ft1 teshu">申请时间<span class="ft2 mrl-10">{{item.applyTime}}</span></div>
     </div>
   </div>
 </template>
 
 <script>
+import { postApplyList } from '@/api/personCenter'
 export default {
   name: 'ApplyRecord',
   data() {
     return {
-      list: [{ a: 1, b: 2, c: 3 }, { a: 1, b: 2, c: 3 }]
+      userId: this.$route.query.userId,
+      list: []
     }
   },
-  methods: {}
+  mounted() {
+    this.getList()
+  },
+  methods: {
+    getList() {
+      let params = {
+        userId: this.userId
+      }
+      postApplyList(params).then(res => {
+        if (res.code === 200) {
+          let data = res.data
+          this.list = data.records
+        }
+      })
+    }
+  }
 }
 </script>
 
@@ -27,8 +44,8 @@ export default {
     justify-content: space-between;
     padding: 15px 30px;
     flex-wrap: wrap;
-    border-top:1px solid rgba(195,198,211,0.2);
-    border-bottom:1px solid rgba(195,198,211,0.2);
+    border-top: 1px solid rgba(195, 198, 211, 0.2);
+    border-bottom: 1px solid rgba(195, 198, 211, 0.2);
     .item {
       width: 50%;
     }

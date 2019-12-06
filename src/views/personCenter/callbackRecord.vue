@@ -9,7 +9,7 @@
     <div class="content">
       <mt-tab-container v-model="selected" class="mrt-10">
         <mt-tab-container-item id="1">
-          <div v-for="n in 12" :key="n" class="item">
+          <div v-for="(item,i) in list" :key="i" class="item">
             <img src="../../assets/images/callbackRecord/phone.png" alt="" class="icon-1">
             <span class="ft3 mrl-20">重庆银行</span>
             <span class="ft3 mrl-20">张经理</span>
@@ -17,7 +17,12 @@
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <mt-cell v-for="n in 4" :title="'测试 ' + n" :key="n" />
+          <div v-for="(item,i) in list" :key="i" class="item">
+            <img src="../../assets/images/callbackRecord/phone.png" alt="" class="icon-1">
+            <span class="ft3 mrl-20">重庆银行</span>
+            <span class="ft3 mrl-20">张经理</span>
+            <span class="ft4 right">2019-01-02 21:25:00</span>
+          </div>
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -35,14 +40,49 @@
 </template>
 
 <script>
+import { postcallBackList } from '@/api/personCenter'
+import moment from 'moment'
 export default {
   name: 'CallbackRecord',
   data() {
     return {
-      selected: 1
+      selected: '1',
+      userId: this.$route.query.userId,
+      list: []
     }
   },
-  methods: {}
+  mounted() {
+    this.getList(this.selected)
+  },
+  watch: {
+    selected(val) {
+      this.getList(val)
+    }
+  },
+  methods: {
+    getList(month) {
+      let params = {}
+      if (month === '1') {
+        params = {
+          userId: this.userId,
+          concatTimeStart: moment().subtract(1, 'months').format('YYYY-MM-DD'),
+          concatTimeEnd: moment().format('YYYY-MM-DD')
+        }
+      }
+      if (month === '2') {
+        params = {
+          userId: this.userId,
+          concatTimeEnd: moment().subtract(1, 'months').format('YYYY-MM-DD')
+        }
+      }
+      postcallBackList(params).then(res => {
+        if (res.code === 200) {
+          let data = res.data
+          this.list = data.records
+        }
+      })
+    }
+  }
 }
 </script>
 <style lang="less">
@@ -64,18 +104,18 @@ export default {
 .callbackRecord {
   height: 100%;
   background: #fff;
-  .head{
-    height:50px;
+  .head {
+    height: 50px;
   }
   .content {
     height: calc(100% - 60px - 50px);
     overflow: scroll;
   }
-  .item{
-    padding:10px;
-    height:45px;
-    border-top:1px solid rgba(195,198,211,0.2);
-    border-bottom:1px solid rgba(195,198,211,0.2);
+  .item {
+    padding: 10px;
+    height: 45px;
+    border-top: 1px solid rgba(195, 198, 211, 0.2);
+    border-bottom: 1px solid rgba(195, 198, 211, 0.2);
   }
   .foot {
     display: flex;
@@ -95,19 +135,19 @@ export default {
     font-weight: bold;
   }
   .ft3 {
-    color: #353D53;
+    color: #353d53;
     font-size: 16px;
     font-weight: bold;
   }
   .ft4 {
-    color: #87898E;
+    color: #87898e;
     font-size: 12px;
     display: inline-block;
-    height:100%;
-    line-height:2;
+    height: 100%;
+    line-height: 2;
   }
-  .icon-1{
-    width:13px;
+  .icon-1 {
+    width: 13px;
   }
 }
 </style>

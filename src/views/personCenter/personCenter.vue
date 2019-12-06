@@ -2,20 +2,20 @@
   <div class='personCenter'>
     <div class="head">
       <div class="head-info">
-        <p class="ft1">江小北</p>
-        <p class="ft1 mrt-10">13982717473</p>
+        <p class="ft1">{{customerName}}</p>
+        <p class="ft1 mrt-10">{{mobile}}</p>
       </div>
       <div class="head-detail">
         <div @click="handleContact">
-          <p class="ft2 tc">1次</p>
+          <p class="ft2 tc">{{callNum}}次</p>
           <p class="mrt-10 ft3">联系过我</p>
         </div>
         <div @click="handleCallback">
-          <p class="ft2 tc">1次</p>
+          <p class="ft2 tc">{{callBackNum}}次</p>
           <p class="mrt-10 ft3">回拨记录</p>
         </div>
         <div @click="handleApply">
-          <p class="ft2 tc">1次</p>
+          <p class="ft2 tc">{{applyNum}}次</p>
           <p class="mrt-10 ft3">申请记录</p>
         </div>
       </div>
@@ -24,7 +24,7 @@
       <div class="mrt-50 item-box">
         <span class="bf"></span>
         <span class="ft4">免打扰设置</span>
-        <mt-switch v-model="value" class="mtswitch"></mt-switch>
+        <mt-switch v-model="state" class="mtswitch" @change="handleChange"></mt-switch>
       </div>
       <div class="mrt-20 item-box" @click="handleModPhone">
         <span class="bf"></span>
@@ -41,25 +41,80 @@
 </template>
 
 <script>
+import { queryUserStatus, queryPersonalCenter, setDisturb } from '@/api/personCenter'
 export default {
   name: 'PersonCenter',
   data() {
     return {
-
+      applyNum: 0,
+      callBackNum: 0,
+      callNum: 0,
+      customerName: '',
+      id: '',
+      mobile: '',
+      state: 0
     }
+  },
+  mounted() {
+    let params = {}
+    let vm = this
+    queryUserStatus(params).then(res => {
+      if (res.code === 200) {
+        queryPersonalCenter(params).then(res => {
+          if (res.code === 200) {
+            let data = res.data
+            vm.customerName = data.customerName
+            vm.mobile = data.mobile
+            vm.applyNum = data.applyNum
+            vm.callBackNum = data.callBackNum
+            vm.callNum = data.callNum
+            vm.id = data.id
+            if (data.state === 0) {
+              vm.state = true
+            } else {
+              vm.state = false
+            }
+          }
+        })
+      } else {
+        this.$router.push('/')
+      }
+    })
   },
   methods: {
     handleModPhone() {
       this.$router.push('/modPhone')
     },
     handleContact() {
-      this.$router.push('/contactMe')
+      this.$router.push({
+        path: '/contactMe',
+        query: { userId: this.id }
+      })
     },
     handleCallback() {
-      this.$router.push('/callbackRecord')
+      this.$router.push({
+        path: '/callbackRecord',
+        query: { userId: this.id }
+      })
     },
     handleApply() {
-      this.$router.push('/applyRecord')
+      this.$router.push({
+        path: '/applyRecord',
+        query: { userId: this.id }
+      })
+    },
+    handleChange() {
+      let vm = this
+      let params = {
+        userId: vm.id,
+        disturb: vm.state ? 0 : 1
+      }
+      setDisturb(params).then(res => {
+        if (res.code === 200) {
+          // let data = res.data
+
+        }
+      })
     }
   }
 }
@@ -107,7 +162,7 @@ export default {
     }
   }
   .content {
-    height: calc(100% - 210px);
+    // height: calc(100% - 210px);
     .item-box {
       padding: 0 15px;
       height: 50px;

@@ -254,7 +254,8 @@ img {
   }
 }
 
-.stepFour,.stepFive {
+.stepFour,
+.stepFive {
   .md-field-item.md-input-item {
     width: 336px;
     height: 50px;
@@ -277,20 +278,26 @@ img {
 }
 
 // 解决bug
-.md-field-item-content:before{
+.md-field-item-content:before {
   transform: scaleY(0.5) translateY(50%);
 }
 
-.toast-container{
+.toast-container {
   z-index: 999999 !important;
 }
 
 // mint-ui样式
-.slot-bg{
+.slot-bg {
   background: #fff;
 }
 
+.md-input-item-msg {
+  font-size: 16px;
+}
 
-.md-input-item-msg{
-  font-size:16px;
+// 省略号显示
+.shenglue {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

@@ -40,7 +40,7 @@ const getToken = function(success) {
       return
     }
     // 后端接口来跳转前端回填地址
-    url = config.url
+    url = config.url + location.href.slice(location.href.lastIndexOf('/'))
     // 开发环境修改切换
     // url =
     //   'http://52.82.81.239:8082/cysk/wx/url/get?returnUrl=http://172.17.210.141:8080/user/'
