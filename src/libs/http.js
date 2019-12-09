@@ -36,6 +36,7 @@ const isloading = function(url) {
 
 // axios 配置
 axios.defaults.timeout = 30000
+axios.defaults.withCredentials = true
 axios.interceptors.request.use(
   config => {
     if (!isInWhiteList(config.url)) {
