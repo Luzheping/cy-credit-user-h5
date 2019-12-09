@@ -11,6 +11,14 @@ export const queryStatistical = params => {
   })
 }
 
+export const getUserInfo = params => {
+  return axios.request({
+    url: api + '/user/get/user',
+    method: 'get',
+    params
+  })
+}
+
 export const querySendSms = params => {
   return axios.request({
     url: api + '/common/sendSms',

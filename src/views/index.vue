@@ -20,9 +20,9 @@
             <md-input-item ref="name" preview-type="text" v-model="expire" title="贷款期限" placeholder="您的期望贷款期限" is-title-latent @change="handleChange" @blur="scrollVal">
               <div class="ft3" slot="right">个月</div>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="customerName" title="姓名" placeholder="您的姓名" maxlength="10" @change="handleName" @blur="scrollVal" :error="errorName" is-title-latent>
+            <md-input-item ref="name" preview-type="text" v-model="customerName" :disabled="isDisabled" title="姓名" placeholder="您的姓名" maxlength="10" @change="handleName" @blur="scrollVal" :error="errorName" is-title-latent>
             </md-input-item>
-            <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" placeholder="您的手机号" maxlength="11" is-title-latent @change="handleChange" @blur="scrollVal">
+            <md-input-item ref="name" preview-type="text" v-model="phone" title="手机号" :disabled="isDisabled" placeholder="您的手机号" maxlength="11" is-title-latent @change="handleChange" @blur="scrollVal">
               <div class="ft4" slot="right" @click="handleGetCode">{{btnContent}}</div>
             </md-input-item>
             <md-input-item ref="name" preview-type="text" v-model="verifyCode" title="验证码" placeholder="4位数验证码" is-title-latent @change="handleChange" @blur="scrollVal"></md-input-item>
@@ -39,7 +39,7 @@
 import icon1 from '../assets/images/index/icon1.png'
 import icon2 from '../assets/images/index/icon2.png'
 import icon3 from '../assets/images/index/icon3.png'
-import { queryStatistical, querySendSms, postSave } from '@/api/index'
+import { queryStatistical, querySendSms, postSave, getUserInfo } from '@/api/index'
 import { scrollTo } from '@/libs/utils'
 import { Toast } from 'mand-mobile'
 export default {
@@ -51,6 +51,7 @@ export default {
       btnContent: '获取验证码',
       time: 0,
       disabled: false,
+      isDisabled: false,
       phone: '',
       // 解决bug
       // openId: JSON.parse(sessionStorage.userInfo).openid,
@@ -88,9 +89,17 @@ export default {
         this.iconList[2].num = data.userRegisterNum
       }
     })
+    getUserInfo(params).then(res => {
+      if (res.code === 200) {
+        let data = res.data
+        this.isDisabled = true
+        this.customerName = data.customerName
+        this.phone = data.mobile
+      }
+    })
   },
   methods: {
-    scrollVal () {
+    scrollVal() {
       scrollTo()
     },
     handleChange() {
