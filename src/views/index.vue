@@ -92,9 +92,11 @@ export default {
     getUserInfo(params).then(res => {
       if (res.code === 200) {
         let data = res.data
-        this.isDisabled = true
-        this.customerName = data.customerName
-        this.phone = data.mobile
+        if (data != null) {
+          this.isDisabled = true
+          this.customerName = data.customerName
+          this.phone = data.mobile
+        }
       }
     })
   },
