@@ -26,16 +26,16 @@
         <span class="ft1 shenglue mrl-20">{{item.manager}}</span>
         <span class="ft2 mrl-20">{{item.lastCallTime}}</span>
         <span class="ft1 ft3 mrl-20">{{item.callNum}}次</span>
-        <a :href="'tel:'+item.phone">
+        <span @click="callPhone(item.id,item.phone)">
           <img src="../../assets/images/contactMe/phone.png" alt="" class="img-size">
-        </a>
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { postPageList } from '@/api/personCenter'
+import { concatCallBack, postPageList } from '@/api/personCenter'
 export default {
   name: 'ContactMe',
   mounted() {
@@ -61,6 +61,16 @@ export default {
     }
   },
   methods: {
+    callPhone(id, phone) {
+      let params = {
+        id: id
+      }
+      concatCallBack(params).then(res => {
+        if (res.code === 200) {
+          location.href = 'tel://' + phone
+        }
+      })
+    },
     // 条件查询
     queryList() {
       let params = this.queryParams

@@ -27,6 +27,14 @@ export const setDisturb = params => {
   })
 }
 
+export const concatCallBack = params => {
+  return axios.request({
+    url: api + '/user/concat/callBack',
+    method: 'get',
+    params
+  })
+}
+
 export const postPageList = params => {
   return axios.request({
     url: api + '/user/call/getPageList',
