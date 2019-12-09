@@ -26,7 +26,9 @@
         <span class="ft1 shenglue mrl-20">{{item.manager}}</span>
         <span class="ft2 mrl-20">{{item.lastCallTime}}</span>
         <span class="ft1 ft3 mrl-20">{{item.callNum}}次</span>
-        <img src="../../assets/images/contactMe/phone.png" alt="" class="img-size">
+        <a :href="'tel:'+item.phone">
+          <img src="../../assets/images/contactMe/phone.png" alt="" class="img-size">
+        </a>
       </div>
     </div>
   </div>
@@ -157,7 +159,7 @@ export default {
     color: #353d53;
     font-size: 16px;
     font-weight: bold;
-    width:50px;
+    width: 50px;
     float: left;
   }
   .ft2 {
@@ -167,8 +169,8 @@ export default {
     height: 100%;
     line-height: 2;
   }
-  .ft3{
-    width:30px;
+  .ft3 {
+    width: 30px;
   }
   .box-top {
     margin-bottom: 2px;

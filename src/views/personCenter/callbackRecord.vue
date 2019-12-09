@@ -11,17 +11,17 @@
         <mt-tab-container-item id="1">
           <div v-for="(item,i) in list" :key="i" class="item">
             <img src="../../assets/images/callbackRecord/phone.png" alt="" class="icon-1">
-            <span class="ft3 mrl-20">重庆银行</span>
-            <span class="ft3 mrl-20">张经理</span>
-            <span class="ft4 right">2019-01-02 21:25:00</span>
+            <span class="ft3 mrl-20 shenglue">{{item.organName}}</span>
+            <span class="ft3 mrl-20 shenglue">{{item.organManageName}}</span>
+            <span class="ft4 right">{{item.concatDate+' '+item.concatTime}}</span>
           </div>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
           <div v-for="(item,i) in list" :key="i" class="item">
             <img src="../../assets/images/callbackRecord/phone.png" alt="" class="icon-1">
-            <span class="ft3 mrl-20">重庆银行</span>
-            <span class="ft3 mrl-20">张经理</span>
-            <span class="ft4 right">2019-01-02 21:25:00</span>
+            <span class="ft3 mrl-20 shenglue">{{item.organName}}</span>
+            <span class="ft3 mrl-20 shenglue">{{item.organManageName}}</span>
+            <span class="ft4 right">{{item.concatDate+' '+item.concatTime}}</span>
           </div>
         </mt-tab-container-item>
       </mt-tab-container>
@@ -29,11 +29,11 @@
     <div class="foot mrt-10">
       <div>
         <span class="ft1">共计联系：</span>
-        <span class="ft2">1585次</span>
+        <span class="ft2">{{concatCountNum}}次</span>
       </div>
       <div>
         <span class="ft1">本月联系：</span>
-        <span class="ft2">231次</span>
+        <span class="ft2">{{currentMothNum}}次</span>
       </div>
     </div>
   </div>
@@ -48,7 +48,9 @@ export default {
     return {
       selected: '1',
       userId: this.$route.query.userId,
-      list: []
+      list: [],
+      concatCountNum: 0,
+      currentMothNum: 0
     }
   },
   mounted() {
@@ -78,7 +80,9 @@ export default {
       postcallBackList(params).then(res => {
         if (res.code === 200) {
           let data = res.data
-          this.list = data.records
+          this.list = data.concatInfoVos
+          this.concatCountNum = data.concatCountNum
+          this.currentMothNum = data.currentMothNum
         }
       })
     }
@@ -138,6 +142,8 @@ export default {
     color: #353d53;
     font-size: 16px;
     font-weight: bold;
+    width:50px;
+    float: left;
   }
   .ft4 {
     color: #87898e;
@@ -148,6 +154,8 @@ export default {
   }
   .icon-1 {
     width: 13px;
+    float: left;
+    margin-top:5px;
   }
 }
 </style>

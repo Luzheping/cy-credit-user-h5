@@ -52,7 +52,7 @@ export default {
       customerName: '',
       id: '',
       mobile: '',
-      state: 0
+      state: false
     }
   },
   mounted() {
