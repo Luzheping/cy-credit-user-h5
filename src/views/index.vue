@@ -281,6 +281,8 @@ export default {
     height: 100%;
     width: 100%;
     overflow: scroll;
+    // 解决ios滚动不顺畅问题
+    -webkit-overflow-scrolling:touch;
     position: absolute;
     top: 0;
     .shade {
