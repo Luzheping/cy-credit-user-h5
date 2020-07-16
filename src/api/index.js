@@ -34,3 +34,11 @@ export const postSave = params => {
     data: params
   })
 }
+
+export const productListIndex = params => {
+  return axios.request({
+    url: api + '/finance/product/list',
+    method: 'post',
+    data: params
+  })
+}

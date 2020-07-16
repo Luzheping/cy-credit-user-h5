@@ -58,3 +58,51 @@ export const postApplyList = params => {
     data: params
   })
 }
+
+export const getConstant = params => {
+  return axios.request({
+    url: api + '/common/getConstant',
+    method: 'get',
+    params
+  })
+}
+
+export const closeLoan = params => {
+  return axios.request({
+    url: api + '/manage/order/close',
+    method: 'get',
+    params
+  })
+}
+
+export const viewMe = params => {
+  return axios.request({
+    url: api + '/user/view/getPageList',
+    method: 'post',
+    data: params
+  })
+}
+
+export const platFrom = params => {
+  return axios.request({
+    url: api + '/user/platfrom/save',
+    method: 'post',
+    params
+  })
+}
+
+export const getAdvise = params => {
+  return axios.request({
+    url: api + '/user/platform/getAdvise',
+    method: 'get',
+    params
+  })
+}
+
+export const complaint = params => {
+  return axios.request({
+    url: api + '/user/complaint/save',
+    method: 'post',
+    data: params
+  })
+}

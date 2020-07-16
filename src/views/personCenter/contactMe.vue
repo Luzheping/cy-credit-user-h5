@@ -1,5 +1,5 @@
 <template>
-  <div class='contactMe'>
+  <div class="contactMe">
     <div class="head mrb-10">
       <div class="item">
         <div class="search-txt" @click="handleQuery(0,'lastCallTime')">
@@ -22,24 +22,65 @@
     </div>
     <div class="content">
       <div class="c-item mrb-10" v-for="(item,i) in list" :key="i">
-        <span class="ft1 shenglue">{{item.organName}}</span>
-        <span class="ft1 shenglue mrl-20">{{item.manager}}</span>
-        <span class="ft2 mrl-20">{{item.lastCallTime}}</span>
-        <span class="ft1 ft3 mrl-20">{{item.callNum}}次</span>
-        <span @click="callPhone(item.id,item.phone)">
-          <img src="../../assets/images/contactMe/phone.png" alt="" class="img-size">
-        </span>
+        <div class="c-item-header">
+          <label>{{item.organName}}</label>
+          <label>{{item.manager}}</label>
+        </div>
+        <div class="c-item-content">
+          <div class="c-item-time">
+            <div class="c-item-num">呼叫次数: {{item.callNum}}次</div>
+            <div>最近呼叫时间: {{item.lastCallTime}}</div>
+          </div>
+          <div class="c-item-icon">
+            <span @click="callPhone(item.id,item.phone)">
+              <img src="../../assets/images/contactMe/phone.png" alt="" class="img-size">
+            </span>
+            <span @click="complaint(item)" style="color: #4a87d8">
+              投诉
+              <!--<img src="../../assets/images/contactMe/complaint.png" alt="" class="img-size">-->
+            </span>
+          </div>
+        </div>
+        <!--<span class="ft1 shenglue">{{item.organName}}</span>-->
+        <!--<span class="ft1 shenglue mrl-20">{{item.manager}}</span>-->
+        <!--<span class="ft2 mrl-20">{{item.lastCallTime}}</span>-->
+        <!--<span class="ft1 ft3 mrl-20">{{item.callNum}}次</span>-->
       </div>
     </div>
+    <mt-popup
+      v-model="cache.popupVisible"
+      position="bottom"
+      class="item-popup"
+      popup-transition="popup-fade">
+      <div class="popup-content">
+        <p class="tit">投诉选项</p>
+        <ul>
+          <li v-for="(item,index) in dataList" :key="index">
+            <span>{{item.text}}</span>
+            <div @click="imgCheckClick(index,item)" class="checked" style="float: right;">
+              <img v-if="!item.ckeBox" src="@/assets/images/common/icon-7.png">
+              <img v-if="item.ckeBox" src="@/assets/images/common/icon-8.png">
+            </div>
+          </li>
+          <div class="com-line"></div>
+        </ul>
+        <div class="order-text-cont over-flow">
+          <mt-button @click="submitComplaint()" :class="flag?'c-btn m-top but-bot':'c-btn-1 m-top but-bot'">投诉</mt-button>
+        </div>
+      </div>
+
+    </mt-popup>
   </div>
 </template>
 
 <script>
-import { concatCallBack, postPageList } from '@/api/personCenter'
+import { concatCallBack, postPageList, getConstant, complaint } from '@/api/personCenter'
+import { MessageBox } from 'mint-ui'
 export default {
   name: 'ContactMe',
   mounted() {
     this.queryList()
+    this.getComplaint()
   },
   data() {
     return {
@@ -49,6 +90,13 @@ export default {
         userId: this.$route.query.userId,
         orders: []
       },
+      flag: false,
+      params: {
+        userId: '', // 投诉人id
+        organId: '', // 被投诉人id
+        content: '',
+        complaintList: [] // 投诉内容
+      },
       dataNum: [
         {
           num: 0
@@ -57,10 +105,43 @@ export default {
           num: 0
         }
       ],
+      manage: '', // 投诉经理
+      cache: {
+        popupVisible: false
+      },
+      dataList: [],
       list: []
     }
   },
+  watch: {
+    params: {
+      deep: true,
+      immediate: true,
+      handler: function(oldValue) {
+        if (oldValue.complaintList.length < 1) {
+          this.flag = false
+        } else {
+          this.flag = true
+        }
+      }
+    }
+  },
   methods: {
+    complaint(item) {
+      this.cache.popupVisible = true
+      this.params.organId = item.organId
+      this.manage = item.manager
+    },
+    submitComplaint() {
+      this.params.userId = this.queryParams.userId
+      this.params.content = this.params.complaintList.join(',')
+      complaint(this.params).then(res => {
+        if (res.code === 200) {
+          this.cache.popupVisible = false
+          MessageBox('提示', '投诉' + this.manage + '成功')
+        }
+      })
+    },
     callPhone(id, phone) {
       let params = {
         id: id
@@ -132,6 +213,18 @@ export default {
           break
       }
       this.queryList()
+    },
+    imgCheckClick(index) {
+      this.dataList[index].ckeBox = !this.dataList[index].ckeBox
+      this.dataList[index].ckeBox ? this.params.complaintList.push(this.dataList[index].key) : this.params.complaintList = this.params.complaintList.filter(e => e !== this.dataList[index].key)
+    },
+    getComplaint() {
+      getConstant({ coding: 'complaint' }).then(res => {
+        if (res.code === 200) {
+          this.dataList = res.data
+          this.dataList.forEach(e => { this.$set(e, 'ckeBox', false) })
+        }
+      })
     }
   }
 }
@@ -139,9 +232,12 @@ export default {
 
 <style scoped lang='less'>
 .contactMe {
+  height: 100%;
+  background: rgba(195, 198, 211, 0.2);
   .head {
     display: flex;
     justify-content: space-around;
+    background: #ffffff;
     border-bottom: 1px solid rgba(195, 198, 211, 0.2);
     .item {
       width: 30%;
@@ -156,9 +252,37 @@ export default {
     height: calc(100% - 40px - 10px);
     overflow: scroll;
     .c-item {
-      border-top: 1px solid rgba(195, 198, 211, 0.2);
-      border-bottom: 1px solid rgba(195, 198, 211, 0.2);
+      font-size: 14px;
+      font-weight: bold;
+      /*border-top: 1px solid rgba(195, 198, 211, 0.2);*/
+      /*border-bottom: 1px solid rgba(195, 198, 211, 0.2);*/
+      background: #ffffff;
       padding: 10px 15px;
+      .c-item-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 35px;
+        border-bottom: 1px solid rgba(195, 198, 211, 0.2);
+      }
+      .c-item-content{
+        height: 60px;
+        display: flex;
+        flex-direction: row;
+        .c-item-time{
+          width: 70%;
+          padding: 10px 0px;
+          .c-item-num{
+            padding-bottom: 20px;
+          }
+        }
+        .c-item-icon{
+          width: 30%;
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+        }
+      }
       .img-size {
         width: 23px;
         float: right;
@@ -272,13 +396,17 @@ export default {
     float: right;
     margin-top: 25px;
   }
-  .popup-content {
-    ul {
-      li {
-        width: 100%;
-        padding: 15px 20px;
-        img {
-          width: 14px;
+  .item-popup{
+    width: 100%;
+    .popup-content {
+      width: 100%;
+      ul {
+        li {
+          /*width: 100%;*/
+          padding: 15px 20px;
+          img {
+            width: 14px;
+          }
         }
       }
     }
@@ -333,5 +461,13 @@ export default {
       width: 100%;
     }
   }
-}
+  .order-text-cont {
+    margin-top: 30px;
+    padding: 15px 20px;
+    margin-bottom: 50px;
+    .m-top {
+      margin-top: 60px;
+    }
+  }
+  }
 </style>

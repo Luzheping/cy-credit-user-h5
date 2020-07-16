@@ -67,14 +67,14 @@ export default {
       if (month === '1') {
         params = {
           userId: this.userId,
-          concatTimeStart: moment().subtract(1, 'months').format('YYYY-MM-DD'),
-          concatTimeEnd: moment().format('YYYY-MM-DD')
+          concatTimeStart: moment().subtract(1, 'months').format('YYYY-MM-DD') + ' 00:00:00',
+          concatTimeEnd: moment().format('YYYY-MM-DD') + ' 23:59:59'
         }
       }
       if (month === '2') {
         params = {
           userId: this.userId,
-          concatTimeEnd: moment().subtract(1, 'months').format('YYYY-MM-DD')
+          concatTimeEnd: moment().subtract(1, 'months').format('YYYY-MM-DD') + ' 00:00:00'
         }
       }
       postcallBackList(params).then(res => {

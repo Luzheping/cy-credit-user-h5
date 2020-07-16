@@ -8,7 +8,7 @@
         <span>1小时审批</span>
         <span>1工作日放款</span>
       </div>
-      <md-button type="primary" class="btn-apply">立即申请</md-button>
+      <md-button type="primary" class="btn-apply">无需流水，无需抵押，凭身份证即可贷款</md-button>
       <div class="side tc">
         {{productName}}
       </div>
@@ -16,7 +16,7 @@
     <div class="content">
       <p class="text mrb-10">贷款钱柜</p>
       <div class="list-box">
-        <div class="list-child" v-for="(item,i) in productList" :key="i">
+        <div class="list-child" v-for="(item,i) in productList" :key="i" @click="toLoan(item.productUrl)">
           <div class="middle">
             <p class="cf1">{{item.productName}}</p>
             <p class="cf2">
@@ -30,6 +30,9 @@
           <img src="../../assets/images/credit/arrar.png" alt="" class="arrar">
         </div>
       </div>
+    </div>
+    <div class="footer">
+      <div @click="toApply" class="remark">没有适合你的产品？让银行主动过联系你吧。<img src="../../assets/images/credit/arrar.png" alt="" class="arrar"></div>
     </div>
   </div>
 </template>
@@ -62,11 +65,18 @@ export default {
     postProductList(params2).then(res => {
       if (res.code === 200) {
         let data = res.data
-        vm.productList = data.records
+        vm.productList = data.records.filter(e => e.isTop !== '0')
       }
     })
   },
-  methods: {}
+  methods: {
+    toLoan(url) {
+      window.location.href = url
+    },
+    toApply() {
+      this.$router.push({ path: '/index' })
+    }
+  }
 }
 </script>
 
@@ -117,6 +127,7 @@ export default {
       }
     }
     .btn-apply {
+      width: 80%;
       background: #fff;
       color: #3077ff;
       font-size: 12px;
@@ -195,4 +206,15 @@ export default {
     }
   }
 }
+  .remark{
+    text-align: center;
+    color: #888;
+    img.arrar{
+      display: inline;
+      vertical-align: -webkit-baseline-middle;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+    }
+  }
 </style>

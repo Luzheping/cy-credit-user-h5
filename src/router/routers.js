@@ -8,7 +8,8 @@ export default [
     path: '/index',
     name: 'index',
     meta: {
-      title: '小豆芽助手'
+      title: '小豆芽助手',
+      keepAlive: true
     },
     component: () => import('@/views/index.vue')
   },
@@ -69,6 +70,14 @@ export default [
     component: () => import('@/views/personCenter/contactMe.vue')
   },
   {
+    path: '/viewMe',
+    name: 'viewMe',
+    meta: {
+      title: '查看过我'
+    },
+    component: () => import('@/views/personCenter/viewMe.vue')
+  },
+  {
     path: '/callbackRecord',
     name: 'callbackRecord',
     meta: {
@@ -83,6 +92,38 @@ export default [
       title: '申请记录'
     },
     component: () => import('@/views/personCenter/applyRecord.vue')
+  },
+  {
+    path: '/platformAdvise',
+    name: 'platformAdvise',
+    meta: {
+      title: '平台建议'
+    },
+    component: () => import('@/views/personCenter/platformAdvise.vue')
+  },
+  {
+    path: '/helpLoan',
+    name: 'helpLoan',
+    meta: {
+      title: '协助贷款'
+    },
+    component: () => import('@/views/personCenter/helpLoan.vue')
+  },
+  {
+    path: '/protocol',
+    name: 'protocol',
+    meta: {
+      title: '小豆芽助手协议'
+    },
+    component: () => import('@/views/protocol/protocol.vue')
+  },
+  {
+    path: '/product',
+    name: 'product',
+    meta: {
+      title: '小豆芽助手'
+    },
+    component: () => import('@/views/product/productIndex.vue')
   },
   {
     path: '/error404',

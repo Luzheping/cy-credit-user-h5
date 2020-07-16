@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === process.argv.pop() ? '/user/' : '/',
+  // publicPath: process.env.NODE_ENV === process.argv.pop() ? '/user/' : '/',
   css: {
     loaderOptions: {
       css: {},
